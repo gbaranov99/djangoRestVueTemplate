@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+  web:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    expose:
+      - "8000"
+    volumes:
+      - ./backend:/code
+    enviornment:
+      - DEBUG=1
+      - SECRET_KEY="y&x(u-n@sz#z-n_)!%hz+p7+px%i6m3g%%(t1^7h*o=yfvem(i"
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=totrno_db
+      - SQL_USER=totrno_user
+      - SQL_PASSWORD=123456abc
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+    depends_on:
+      - db
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html/frontend:ro
+      - ./backend/public:/usr/share/nginx//html/backend/public:ro
+    links:
+      - web
+    depends_on:
+      - web
+  db:
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=totrno_user
+      - POSTGRES_PASSWORD=123456abc
+      - POSTGRES_DB=totrno_db
+
+volumes:
+  postgres_data:
