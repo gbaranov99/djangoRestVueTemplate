@@ -56,6 +56,17 @@ sqlparse = "*"
 
 [[package]]
 category = "main"
+description = "alias."
+name = "django-rest-framework"
+optional = false
+python-versions = "*"
+version = "0.1.0"
+
+[package.dependencies]
+djangorestframework = "*"
+
+[[package]]
+category = "main"
 description = "A simple collection of common Django utilities."
 name = "django-toolbelt"
 optional = false
@@ -197,7 +208,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "6dd5575fbcc8f93a5cc3b943cb4f10f6e3cd11ceeff77f741e65e7f2240824f3"
+content-hash = "bd5b29a9db3b030c8a11ce004d074da875400618a31b4650a01c66bd33da2783"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -207,6 +218,7 @@ colorama = ["05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d", 
 dj-database-url = ["4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163", "851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"]
 dj-static = ["032ec1c532617922e6e3e956d504a6fb1acce4fc1c7c94612d0fda21828ce8ef"]
 django = ["4025317ca01f75fc79250ff7262a06d8ba97cd4f82e93394b2a0a6a4a925caeb", "a8ca1033acac9f33995eb2209a6bf18a4681c3e5269a878e9a7e0b7384ed1ca3"]
+django-rest-framework = ["47a8f496fa69e3b6bd79f68dd7a1527d907d6b77f009e9db7cf9bb21cc565e4a"]
 django-toolbelt = ["2711b7f9c46908a3f867f4ebb5c0c3f06dcc4f2cabe48a7a53292f6f1cbb83e5"]
 djangorestframework = ["5488aed8f8df5ec1d70f04b2114abc52ae6729748a176c453313834a9ee179c8", "dc81cbf9775c6898a580f6f1f387c4777d12bd87abf0f5406018d32ccae71090"]
 gunicorn = ["aa8e0b40b4157b36a5df5e599f45c9c76d6af43845ba3b3b0efe2c70473c2471", "fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3"]

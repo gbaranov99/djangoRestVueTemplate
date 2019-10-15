@@ -28,8 +28,6 @@ services:
     volumes:
       - ./frontend:/usr/share/nginx/html/frontend:ro
       - ./backend/public:/usr/share/nginx//html/backend/public:ro
-    links:
-      - web
     depends_on:
       - web
   db:
