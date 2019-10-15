@@ -1,43 +1,52 @@
-version: '3.1'
+version: '3.3'
 
 services:
-  web:
+  backend:
     build: ./backend
-    command: python manage.py runserver 0.0.0.0:8000
-    expose:
-      - "8000"
+    depends_on:
+      - postgres
     volumes:
       - ./backend:/code
-    enviornment:
+    command: python manage.py runserver 0.0.0.0:8000
+    entrypoint: "/code/entrypoint.sh"
+    restart: on-failure
+    environment:
       - DEBUG=1
       - SECRET_KEY="y&x(u-n@sz#z-n_)!%hz+p7+px%i6m3g%%(t1^7h*o=yfvem(i"
       - SQL_ENGINE=django.db.backends.postgresql
       - SQL_DATABASE=totrno_db
       - SQL_USER=totrno_user
       - SQL_PASSWORD=123456abc
-      - SQL_HOST=db
+      - SQL_HOST=postgres
       - SQL_PORT=5432
       - DATABASE=postgres
-    depends_on:
-      - db
-  nginx:
-    restart: always
-    build: ./nginx
-    ports:
-      - "80:80"
+
+  frontend:
+    image: node:10-alpine
+    command: yarn serve
     volumes:
-      - ./frontend:/usr/share/nginx/html/frontend:ro
-      - ./backend/public:/usr/share/nginx//html/backend/public:ro
-    depends_on:
-      - web
-  db:
-    restart: always
+      - ./frontend:/code
+    working_dir: /code
+    restart: on-failure
+
+  postgres:
+    image: postgres:11.5-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=totrno_user
       - POSTGRES_PASSWORD=123456abc
       - POSTGRES_DB=totrno_db
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./backend/static/:/code/static/
+      - ./nginx/dev.conf:/etc/nginx/nginx.conf:ro
 
 volumes:
   postgres_data:
