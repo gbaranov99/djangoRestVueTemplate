@@ -1,3 +1,4 @@
 node_modules
 /dist
+backend/static
 __pycache__
