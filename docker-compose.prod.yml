@@ -2,43 +2,39 @@ version: '3.3'
 
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - db
     volumes:
       - ./backend:/code
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
     restart: on-failure
     environment:
       - DEBUG=1
       - SECRET_KEY="y&x(u-n@sz#z-n_)!%hz+p7+px%i6m3g%%(t1^7h*o=yfvem(i"
       - SQL_ENGINE=django.db.backends.postgresql
-      - SQL_DATABASE=template_db
-      - SQL_USER=template_user
+      - SQL_USER=template_user_prod
+      - SQL_DATABASE=template_db_prod
       - SQL_PASSWORD=123456abc
       - SQL_HOST=db
       - SQL_PORT=5432
       - DATABASE=postgres
-    depends_on:
-      - db
-
-  frontend:
-    image: node:10-alpine
-    command: yarn serve
-    volumes:
-      - ./frontend:/code
-    working_dir: /code
-    restart: on-failure
 
   db:
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=template_db
-      - POSTGRES_USER=template_user
+      - POSTGRES_USER=template_user_prod
+      - POSTGRES_DB=template_db_prod
       - POSTGRES_PASSWORD=123456abc
 
   nginx:
-    image: nginx:alpine
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     ports:
       - "8000:80"
     depends_on:
@@ -46,7 +42,7 @@ services:
     volumes:
       - ./backend/media/:/code/media/
       - ./backend/static/:/code/static/
-      - ./nginx/dev.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/prod.conf:/etc/nginx/nginx.conf:ro
 
 volumes:
   postgres_data:

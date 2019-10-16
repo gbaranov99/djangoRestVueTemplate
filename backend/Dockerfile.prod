@@ -1,7 +1,6 @@
 # pull official base image
 FROM python:3.7.4-alpine
 
-RUN mkdir /code
 WORKDIR /code
 
 ARG MY_ENV
@@ -25,15 +24,18 @@ RUN apk update \
 RUN pip install --upgrade pip
 RUN pip install "poetry==$POETRY_VERSION"
 
-# Creating folders, and files for a project:
-COPY ./poetry.lock ./pyproject.toml /code/
+# copy entrypoint.sh
+COPY ./entrypoint.prod.sh /code/entrypoint.prod.sh
+
+# Copy only requirements to cache them in docker layer
+COPY poetry.lock pyproject.toml /code/
 
 # Project initialization:
 RUN poetry config settings.virtualenvs.create false \
-	&& poetry install $(test "$MY_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
+	&& poetry install --no-interaction --no-ansi
 
-COPY ./entrypoint.sh /code/entrypoint.sh
-COPY ./static/ /code/static/
+# Creating folders, and files for a project:
+COPY . /code
 
 # run entrypoint.sh
-ENTRYPOINT ["/code/entrypoint.sh"]
+ENTRYPOINT ["/code/entrypoint.prod.sh"]
