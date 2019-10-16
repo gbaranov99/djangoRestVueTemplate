@@ -12,9 +12,9 @@ then
 fi
 
 # Uncomment following code when running production build for the first time
-python manage.py flush --no-input
-python manage.py makemigrations
-python manage.py migrate
-python manage.py collectstatic --no-input --clear
+#python manage.py flush --no-input
+#python manage.py makemigrations
+#python manage.py migrate
+#python manage.py collectstatic --no-input --clear
 
 exec "$@"
