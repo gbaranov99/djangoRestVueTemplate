@@ -25,7 +25,7 @@ services:
   db:
     image: postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_prod_data:/var/lib/postgresql_prod/data/
     environment:
       - POSTGRES_USER=template_user_prod
       - POSTGRES_DB=template_db_prod
@@ -45,4 +45,4 @@ services:
       - ./nginx/prod.conf:/etc/nginx/nginx.conf:ro
 
 volumes:
-  postgres_data:
+  postgres_prod_data:
