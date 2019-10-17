@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <h1> Iss ya boi, GREg</h1>
-      <router-link :to="{name: 'home' }">Vue</router-link> |
-      <router-link :to="{name: 'files' }">Django Rest</router-link>
+    <h1> Iss ya boi, GREg</h1>	
+    <div id="nav">
+    </div>
+    <router-view/>
+    <router-link :to="{name: 'home' }">Vue</router-link> |
+    <router-link :to="{name: 'files' }">Django Rest</router-link>
   </div>
 </template>
 

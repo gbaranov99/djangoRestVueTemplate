@@ -10,7 +10,7 @@
     <input 
       type="submit" 
       value="Add" 
-      @click="addFile({ title: title, body: content })" 
+      @click="addFile({ title: title, content: content })" 
       :disabled="!title || !content">
 
     <hr/>
@@ -19,7 +19,7 @@
     <div class="file" v-for="(file, index) in files" :key="index">
         <p class="file-index">[{{index}}]</p>
         <p class="file-title" v-html="file.title"></p>
-        <p class="file-body" v-html="file.body"></p>
+        <p class="file-content" v-html="file.content"></p>
         <input type="submit" @click="deleteFile(file.pk)" value="Delete" />
     </div>
   </div>
