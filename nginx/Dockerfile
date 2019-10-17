@@ -3,7 +3,7 @@ FROM node:10-alpine as build-deps
 
 WORKDIR /code/
 
-COPY frontend/babel.config.js frontend/package.json frontend/vue.config.js frontend/yarn.lock /code/
+COPY frontend/babel.config.js frontend/package.json frontend/yarn.lock /code/
 RUN yarn install
 
 COPY frontend /code/
