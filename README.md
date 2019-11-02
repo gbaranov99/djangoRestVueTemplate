@@ -21,6 +21,8 @@ Docker and docker-compose to run server with one command:
 ### For development build:
 docker-compose up --build -d
 
+yarn install may need to be run in frontend folder to create node modules
+
 ### For production build:
 #### Before building, run:
 docker-compose -f docker-compose.prod.yml run backend python /code/manage.py migrate
